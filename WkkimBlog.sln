@@ -5,8 +5,6 @@ VisualStudioVersion = 17.9.34607.119
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wkkim.Blog.Web", "Wkkim.Blog.Web\Wkkim.Blog.Web.csproj", "{92EC689A-A125-47B4-8AB8-894F6B08DDA0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wkkim.Blog.Connection", "Wkkim.Blog.Connection\Wkkim.Blog.Connection.csproj", "{D2DF4B47-5B1C-4EE7-9EC8-81E36D03FE71}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{92EC689A-A125-47B4-8AB8-894F6B08DDA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92EC689A-A125-47B4-8AB8-894F6B08DDA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92EC689A-A125-47B4-8AB8-894F6B08DDA0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D2DF4B47-5B1C-4EE7-9EC8-81E36D03FE71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D2DF4B47-5B1C-4EE7-9EC8-81E36D03FE71}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D2DF4B47-5B1C-4EE7-9EC8-81E36D03FE71}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D2DF4B47-5B1C-4EE7-9EC8-81E36D03FE71}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

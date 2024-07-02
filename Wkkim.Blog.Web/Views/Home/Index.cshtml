@@ -1,0 +1,86 @@
+﻿@model Wkkim.Blog.Web.Models.ViewModels.HomeViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+<div class="container col-xxl-8 px-4 py-5">
+    <div class="row align-items-center g-5 py-5">
+        <div class="col-12 col-lg-15">
+            <h1 class="display-5 fw-bold lh-1 mb-3">
+                Adaptable Developer WoongKeol Kim
+            </h1>
+            <p class="lead">
+                A developer capable of expanding my personal skills to meet diverse environments and requirements.
+                Depending on the project's needs, Proficient in using various tools, including C#, SQL, DevExpress, and Python.
+            </p>
+            <p class="lead">
+                Primary development areas are app development using C# (WinForm, WPF) and SQL, and also expanding expertise to include ASP.Net.
+            </p>
+            <p class="lead">
+                Quickly gained specialized knowledge across various industries,
+                from defense software in South Korea to government project software and automation equipment software for electric vehicle battery inspection.
+            </p>
+        </div>
+
+        <div class="col-12 col-lg-6">
+            <img src="https://images.pexels.com/photos/196655/pexels-photo-196655.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Alternate Text"
+                 class="d-block mx-lg-auto img-fluid" width="600" />
+
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row justify-content-start">
+        <div class="col-6 d-flex mb-3">
+            @if (Model != null && Model.Tags.Any())
+            {
+                foreach (var tag in Model.Tags)
+                {
+                    <span class=" badge bg-dark me-1">
+                        @tag.Name
+                    </span>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row justify-content-center">
+        @if (Model != null && Model.BlogPosts.Any())
+        {
+            foreach (var blogPost in Model.BlogPosts)
+            {
+                <div class="col-sm-12 col-lg-6">
+                    <div class="mb-5 bg-light box-shadow p-5">
+                        <img src="@blogPost.FeaturedImageUrl" alt="@blogPost.Heading"
+                             class="mb-2 d-block img-fluid" />
+
+                        <h2 class="mb-4">@blogPost.Heading</h2>
+                        <p class="mb-4">
+                            Author: @blogPost.Author
+                            <br />
+                            Published Date : @blogPost.PublishedDate.ToShortDateString()
+                        </p>
+
+                        <p class="mb-4">
+                            @foreach (var tag in blogPost.Tags)
+                            {
+                                <span class="badge bg-secondary m-1">@tag.Name</span>
+                            }
+                        </p>
+
+                        <p class="mb-5">@blogPost.ShortDescription</p>
+
+                        <a class="btn btn-dark"
+                           asp-area=""
+                           asp-controller="Blogs"
+                           asp-action="Index"
+                           asp-route-urlHandle="@blogPost.UrlHandle">Read More</a>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>

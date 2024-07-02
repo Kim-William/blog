@@ -1,2 +1,2 @@
-# blog
-ASP.NET Blog
+# WkkimBlog
+ Blog repository

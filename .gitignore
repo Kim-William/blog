@@ -1,0 +1,10 @@
+﻿################################################################################
+# 이 .gitignore 파일은 Microsoft(R) Visual Studio에서 자동으로 만들어졌습니다.
+################################################################################
+
+/.vs
+/Wkkim.Blog.Web/bin/Debug/net7.0/appsettings.json
+/Wkkim.Blog.Web/bin/Debug/net8.0/appsettings.json
+/Wkkim.Blog.Web/bin/Release/net8.0/appsettings.json
+/Wkkim.Blog.Web/bin/Release/net7.0/appsettings.json
+/Wkkim.Blog.Web/appsettings.json

@@ -24,7 +24,8 @@ namespace Wkkim.Blog.Web.Repositories
             var uploadParams = new ImageUploadParams()
             {
                 File = new FileDescription(file.FileName, file.OpenReadStream()),
-                DisplayName = file.FileName
+                DisplayName = file.FileName,
+                Transformation = new Transformation().Width(855).Crop("scale").Chain().FetchFormat("auto")
             };
 
             var uploadResult = await client.UploadAsync(uploadParams);

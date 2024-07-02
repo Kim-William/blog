@@ -124,7 +124,9 @@
                     'Aceept': '*/*',
                 },
                 body: data
-            }).then(response => response.json())
+            }).then(response => 
+                response.json()
+            )
                 .then(result => {
                     featuredImageUrlElement.value = result.link;
                     featuredImageDisplayElement.src = result.link;

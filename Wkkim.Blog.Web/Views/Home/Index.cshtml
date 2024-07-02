@@ -12,11 +12,9 @@
             <p class="lead">
                 A developer capable of expanding my personal skills to meet diverse environments and requirements.
                 Depending on the project's needs, Proficient in using various tools, including C#, SQL, DevExpress, and Python.
-            </p>
-            <p class="lead">
+                <br/>
                 Primary development areas are app development using C# (WinForm, WPF) and SQL, and also expanding expertise to include ASP.Net.
-            </p>
-            <p class="lead">
+                <br />
                 Quickly gained specialized knowledge across various industries,
                 from defense software in South Korea to government project software and automation equipment software for electric vehicle battery inspection.
             </p>
@@ -30,57 +28,85 @@
     </div>
 </div>
 
-<div class="container">
-    <div class="row justify-content-start">
-        <div class="col-6 d-flex mb-3">
-            @if (Model != null && Model.Tags.Any())
-            {
-                foreach (var tag in Model.Tags)
-                {
-                    <span class=" badge bg-dark me-1">
-                        @tag.Name
-                    </span>
-                }
-            }
+<form class="container">
+    @if (Model != null && Model.Tags.Any())
+    {
+        <div class="row justify-content-start ">
+            <H5>
+                Select tags
+            </H5>
         </div>
-    </div>
-</div>
 
-<div class="container">
-    <div class="row justify-content-center">
-        @if (Model != null && Model.BlogPosts.Any())
-        {
-            foreach (var blogPost in Model.BlogPosts)
-            {
-                <div class="col-sm-12 col-lg-6">
-                    <div class="mb-5 bg-light box-shadow p-5">
-                        <img src="@blogPost.FeaturedImageUrl" alt="@blogPost.Heading"
-                             class="mb-2 d-block img-fluid" />
-
-                        <h2 class="mb-4">@blogPost.Heading</h2>
-                        <p class="mb-4">
-                            Author: @blogPost.Author
-                            <br />
-                            Published Date : @blogPost.PublishedDate.ToShortDateString()
-                        </p>
-
-                        <p class="mb-4">
-                            @foreach (var tag in blogPost.Tags)
-                            {
-                                <span class="badge bg-secondary m-1">@tag.Name</span>
-                            }
-                        </p>
-
-                        <p class="mb-5">@blogPost.ShortDescription</p>
-
-                        <a class="btn btn-dark"
-                           asp-area=""
-                           asp-controller="Blogs"
-                           asp-action="Index"
-                           asp-route-urlHandle="@blogPost.UrlHandle">Read More</a>
-                    </div>
+        <div class="row justify-content-start">
+            <div class="col-6 d-flex mb-3">
+                <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+                    @foreach (var tag in Model.Tags)
+                    {
+                        <input type="checkbox" class="btn-check" id=@tag.Name data-tag-id="@tag.Id" autocomplete="off" checked onchange="updatePosts()" />
+                        <label class="btn btn-outline-primary" for=@tag.Name>@tag.Name</label>
+                    }
                 </div>
+            </div>
+        </div>
+    }
+</form>
+
+@if (Model != null && Model.BlogPosts.Any())
+{
+    <div class="container" id="posts">
+    </div>
+}
+
+@section Scripts {
+
+    <script type="text/javascript">
+        function updatePosts() {
+            var selectedTags = [];
+            $('.btn-check:checked').each(function () {
+                selectedTags.push($(this).data('tag-id'));
+            });
+
+            if (selectedTags.length > 0) {
+                $.ajax({
+                    type: "GET",
+                    url: '@Url.Action("PostsByTag", "Home")',
+                    data: { tagIds: selectedTags },
+                    traditional: true, // 배열을 전송하기 위해 필요
+                    success: function (response) {
+                        $('#posts').html(response);
+                    },
+                    error: function () {
+                    }
+                });
+            } else {
+                $('#posts').html(''); // 태그 선택이 해제되면 게시글 목록 초기화
             }
         }
-    </div>
-</div>
+
+        $(document).ready(function () {
+            updatePosts(); // 페이지 로드 시 초기 게시글 표시
+        });
+    </script>
+
+
+    <script>
+        function fonctionTest(tN, val) {
+            console.log(tN);
+            console.log(val);
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("ReceiveData", "Home")',  // 컨트롤러 메서드의 URL
+                data: { tagIdStr: tN, isChecked: val },
+                success: function (response) {
+                    if (response.success) {
+                        alert(response.message);
+                    } else {
+                    }
+                },
+                error: function () {
+                    alert("An error occurred.");
+                }
+            });
+        }
+    </script>
+}

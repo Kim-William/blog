@@ -1,0 +1,37 @@
+﻿@using Wkkim.Blog.Web.Models.Domain
+@model IEnumerable<BlogPost>
+
+<div class="row justify-content-center">
+    @foreach (var blogPost in Model)
+    {
+        <div class="col-sm-12 col-lg-6">
+            <div class="card mb-2 border-dark ">
+                <img src="@blogPost.FeaturedImageUrl" alt="@blogPost.Heading" class="card-img-top" />
+
+                <h2 class="card-title">@blogPost.Heading</h2>
+                <div class="card-body">
+                    <p>
+                        Author: @blogPost.Author
+                        <br />
+                        Published Date : @blogPost.PublishedDate.ToShortDateString()
+                    </p>
+
+                    <p>
+                        @foreach (var tag in blogPost.Tags)
+                        {
+                            <span class="badge bg-secondary m-1">@tag.Name</span>
+                        }
+                    </p>
+
+                    <p class="card-text">@blogPost.ShortDescription</p>
+
+                    <a class="btn btn-dark"
+                       asp-area=""
+                       asp-controller="Blogs"
+                       asp-action="Index"
+                       asp-route-urlHandle="@blogPost.UrlHandle">Read More</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

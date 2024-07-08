@@ -24,6 +24,7 @@
 
         <div class="mb-3">
             <label class="form-label">Content</label>
+            <input type="text" class="form-control" id="attachedImageId" asp-for="AttachedImageUrl" readonly hidden />
             <textarea class="form-control" id="content" asp-for="Content"></textarea>
         </div>
 
@@ -83,14 +84,28 @@
 @section Scripts {
     <script>
         var editor = new FroalaEditor('#content', {
-            imageUploadURL: '/api/images'
+            imageUploadURL: '/api/images',
+            imageEditButtons: ['imageReplace', 'imageAlign', 'imageRemove', '|', 'imageLink', 'linkOpen', 'linkEdit', 'linkRemove', '-', 'imageDisplay', 'imageStyle', 'imageAlt', 'imageSize'],
+            events: {
+                'image.inserted': function ($img, response) {
+                    $img.css('width', '80%');
+                },
+                'image.uploaded': function (response) {
+                    const res = JSON.parse(response);
+                    updateModel(res.id);
+                }
+            }
+            
         });
 
+        async function updateModel(id){
+            console.log(id);
+            document.getElementById('attachedImageId').value += id + ',';
+        }
 
         const featuredUploadElement = document.getElementById('featuredImageUpload');
         const featuredImageUrlElement = document.getElementById('featuredImageUrl');
         const featuredImageDisplayElement = document.getElementById('featuredImageDisplay');
-
 
         async function uploadFeaturedImage(e) {
             console.log(e.target.files[0]);
@@ -111,7 +126,6 @@
                     featuredImageDisplayElement.style.display = 'block';
                 });
         }
-
 
         featuredUploadElement.addEventListener('change', uploadFeaturedImage);
 

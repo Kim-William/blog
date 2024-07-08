@@ -10,9 +10,9 @@ namespace Wkkim.Blog.Web.Repositories
     {
         private readonly BlogDbContext blogDbContext;
 
-        public BlogPostRepository(BlogDbContext bloggieDbContext)
+        public BlogPostRepository(BlogDbContext blogDbContext)
         {
-            this.blogDbContext = bloggieDbContext;
+            this.blogDbContext = blogDbContext;
         }
 
         public async Task<BlogPost> AddAsync(BlogPost blogPost)

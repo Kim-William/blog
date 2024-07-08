@@ -1,7 +1,12 @@
 ﻿
+using System.Linq;
+
+using DevExpress.Data.Utils;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Hosting.Internal;
 
 using Wkkim.Blog.Web.Models.Domain;
 using Wkkim.Blog.Web.Models.ViewModels;
@@ -14,11 +19,15 @@ namespace Wkkim.Blog.Web.Controllers
     {
         private readonly ITagRepository tagRepository;
         private readonly IBlogPostRepository blogRepository;
+        private readonly IImageRepository imageRepository;
+        private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnvironment;
 
-        public AdminBlogPostsController(ITagRepository tagRepository, IBlogPostRepository blogRepository)
+        public AdminBlogPostsController(ITagRepository tagRepository, IBlogPostRepository blogRepository, IImageRepository imageRepository, Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnvironment)
         {
             this.tagRepository = tagRepository;
             this.blogRepository = blogRepository;
+            this.imageRepository = imageRepository;
+            this.hostingEnvironment = hostingEnvironment;
         }
 
         [Authorize(Roles = "Admin")]
@@ -52,24 +61,113 @@ namespace Wkkim.Blog.Web.Controllers
                 PublishedDate = addBlogPostRequest.PublishedDate,
                 Author = addBlogPostRequest.Author,
                 Visible = addBlogPostRequest.Visible,
-            };
+        };
 
+            var idStr = blogPost.FeaturedImageUrl.Split('/').LastOrDefault().Split('.')[0];
 
-            var selectedTags = new List<Tag>();
-            foreach (var selectedTagId in addBlogPostRequest.SelectedTags)
+            addBlogPostRequest.AttachedImageUrls = addBlogPostRequest.AttachedImageUrl.Split(",").Where(t => addBlogPostRequest.Content.Contains(t) && !string.IsNullOrWhiteSpace(t)).ToList().Append(idStr).ToArray();
+            var deletedList = addBlogPostRequest.AttachedImageUrl.Split(",").Where(t => !addBlogPostRequest.Content.Contains(t) && !string.IsNullOrWhiteSpace(t)).ToArray();
+
+            var webRootPath = hostingEnvironment.WebRootPath;
+            var fileRoute = Path.Combine(webRootPath, "uploads");
+            string[] files = System.IO.Directory.GetFiles(fileRoute);
+
+            if (deletedList!=null && deletedList.Length > 0 )
             {
-                var selectedTagIdAsGuid = Guid.Parse(selectedTagId);
-                var existingTag = await tagRepository.GetAsync(selectedTagIdAsGuid);
-
-                if (existingTag!=null)
+                for (int i = 0; i < deletedList.Length; i++)
                 {
-                    selectedTags.Add(existingTag);
+                    if (files.Any(t=>t.Contains(deletedList[i])))
+                    {
+                        var target = files.SingleOrDefault(t => t.Contains(deletedList[i]));
+                        System.IO.File.Delete(Path.Combine(fileRoute, target));
+                    }
+                } 
+            }
+
+            var imgList = new List<Image>();
+
+            if (addBlogPostRequest.AttachedImageUrls != null && addBlogPostRequest.AttachedImageUrls.Length > 0)
+            {
+                files = System.IO.Directory.GetFiles(fileRoute);
+
+                try
+                {
+                    for (int i = 0; i < addBlogPostRequest.AttachedImageUrls.Length; i++)
+                    {
+                        if (files.Any(t => t.Contains(addBlogPostRequest.AttachedImageUrls[i])))
+                        {
+                            var target = files.SingleOrDefault(t => t.Contains(addBlogPostRequest.AttachedImageUrls[i]));
+
+                            var img = new Image();
+                            img.BlogPost = blogPost;
+                            img.FilePath = Path.Combine(fileRoute, target);
+                            img.Id = Guid.Parse(addBlogPostRequest.AttachedImageUrls[i]);
+
+                            imgList.Add(img);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    if (addBlogPostRequest.AttachedImageUrls != null && addBlogPostRequest.AttachedImageUrls.Length > 0)
+                    {
+                        files = System.IO.Directory.GetFiles(fileRoute);
+
+                        for (int i = 0; i < addBlogPostRequest.AttachedImageUrls.Length; i++)
+                        {
+                            if (files.Any(t => t.Contains(addBlogPostRequest.AttachedImageUrls[i])))
+                            {
+                                var target = files.SingleOrDefault(t => t.Contains(addBlogPostRequest.AttachedImageUrls[i]));
+                                System.IO.File.Delete(Path.Combine(fileRoute, target));
+                            }
+                        }
+                    }
                 }
             }
 
-            blogPost.Tags = selectedTags;
+            try
+            {
+                var selectedTags = new List<Tag>();
+                foreach (var selectedTagId in addBlogPostRequest.SelectedTags)
+                {
+                    var selectedTagIdAsGuid = Guid.Parse(selectedTagId);
+                    var existingTag = await tagRepository.GetAsync(selectedTagIdAsGuid);
 
-            await blogRepository.AddAsync(blogPost);
+                    if (existingTag != null)
+                    {
+                        selectedTags.Add(existingTag);
+                    }
+                }
+
+                blogPost.Tags = selectedTags;
+
+                blogPost.Images = imgList;
+                await blogRepository.AddAsync(blogPost);
+
+                foreach (var img in imgList)
+                {
+                    await imageRepository.AddAsync(img);
+                }
+            }
+            catch (Exception ex)
+            {
+                if (addBlogPostRequest.AttachedImageUrls != null && addBlogPostRequest.AttachedImageUrls.Length > 0)
+                {
+                    files = System.IO.Directory.GetFiles(fileRoute);
+
+                    for (int i = 0; i < addBlogPostRequest.AttachedImageUrls.Length; i++)
+                    {
+                        if (files.Any(t => t.Contains(addBlogPostRequest.AttachedImageUrls[i])))
+                        {
+                            var target = files.SingleOrDefault(t => t.Contains(addBlogPostRequest.AttachedImageUrls[i]));
+                            System.IO.File.Delete(Path.Combine(fileRoute, target));
+
+                            await imageRepository.DeleteAsync(Guid.Parse(addBlogPostRequest.AttachedImageUrls[i]));
+                        }
+                    }
+
+                }
+            }
 
             return RedirectToAction("Add");
         }

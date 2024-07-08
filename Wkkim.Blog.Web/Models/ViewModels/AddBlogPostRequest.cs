@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 
+using Wkkim.Blog.Web.Models.Domain;
+
 namespace Wkkim.Blog.Web.Models.ViewModels
 {
     public class AddBlogPostRequest
@@ -14,9 +16,14 @@ namespace Wkkim.Blog.Web.Models.ViewModels
         public string Author { get; set; }
         public bool Visible { get; set; }
 
+        public string AttachedImageUrl { get; set; }
+
         // Display tags
         public IEnumerable<SelectListItem> Tags { get; set; }
         // Collect Tag
         public string[] SelectedTags { get; set; } = Array.Empty<string>();
+
+        public string[] AttachedImageUrls = Array.Empty<string>();
+
     }
 }

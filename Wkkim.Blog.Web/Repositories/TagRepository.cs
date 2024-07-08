@@ -9,34 +9,34 @@ namespace Wkkim.Blog.Web.Repositories
 {
     public class TagRepository : ITagRepository
     {
-        private readonly BlogDbContext bloggieDbContext;
+        private readonly BlogDbContext blogDbContext;
 
-        public TagRepository(BlogDbContext bloggieDbContext)
+        public TagRepository(BlogDbContext blogDbContext)
         {
-            this.bloggieDbContext = bloggieDbContext;
+            this.blogDbContext = blogDbContext;
         }
         
         public async Task<Tag> AddAsync(Tag tag)
         {
-            await bloggieDbContext.Tags.AddAsync(tag);
-            await bloggieDbContext.SaveChangesAsync();
+            await blogDbContext.Tags.AddAsync(tag);
+            await blogDbContext.SaveChangesAsync();
 
             return tag;
         }
 
         public async Task<int> CountAsync()
         {
-            return await bloggieDbContext.Tags.CountAsync();
+            return await blogDbContext.Tags.CountAsync();
         }
 
         public async Task<Tag?> DeleteAsync(Guid id)
         {
-            var existingTag = await bloggieDbContext.Tags.FindAsync(id);
+            var existingTag = await blogDbContext.Tags.FindAsync(id);
 
             if (existingTag != null)
             {
-                bloggieDbContext.Tags.Remove(existingTag);
-                await bloggieDbContext.SaveChangesAsync();
+                blogDbContext.Tags.Remove(existingTag);
+                await blogDbContext.SaveChangesAsync();
 
                 return existingTag;
             }
@@ -46,7 +46,7 @@ namespace Wkkim.Blog.Web.Repositories
 
         public async Task<IEnumerable<Tag>> GetAllAsync(string? searchQuery, string? sortBy, bool isDesc, int pageNumber =1, int pageSize = 100)
         {
-            var query = bloggieDbContext.Tags.AsQueryable();
+            var query = blogDbContext.Tags.AsQueryable();
 
             // Filtering
             if (!string.IsNullOrWhiteSpace(searchQuery))
@@ -80,19 +80,19 @@ namespace Wkkim.Blog.Web.Repositories
 
         public async Task<Tag?> GetAsync(Guid id)
         {
-            return await bloggieDbContext.Tags.FirstOrDefaultAsync(t => t.Id == id);
+            return await blogDbContext.Tags.FirstOrDefaultAsync(t => t.Id == id);
         }
 
         public async Task<Tag?> UpdateAsync(Tag tag)
         {
-            var existingTag = await bloggieDbContext.Tags.FindAsync(tag.Id);
+            var existingTag = await blogDbContext.Tags.FindAsync(tag.Id);
 
             if (existingTag!=null)
             {
                 existingTag.Name = tag.Name;
                 existingTag.DisplayName = tag.DisplayName;
 
-                await bloggieDbContext.SaveChangesAsync();
+                await blogDbContext.SaveChangesAsync();
 
                 return existingTag;
             }

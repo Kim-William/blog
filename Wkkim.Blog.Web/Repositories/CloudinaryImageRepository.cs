@@ -1,8 +1,5 @@
-﻿
-using CloudinaryDotNet;
+﻿using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
-
-using Wkkim.Blog.Web.Models.Domain;
 
 namespace Wkkim.Blog.Web.Repositories
 {
@@ -20,24 +17,13 @@ namespace Wkkim.Blog.Web.Repositories
                 configuration.GetSection("Cloudinary")["ApiSecret"]);
         }
 
-        public Task<Image> AddAsync(Image blogPost)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Image?> DeleteAsync(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<string> UploadAsync(IFormFile file)
         {
             var client = new Cloudinary(account);
             var uploadParams = new ImageUploadParams()
             {
                 File = new FileDescription(file.FileName, file.OpenReadStream()),
-                DisplayName = file.FileName,
-                Transformation = new Transformation().Width(855).Crop("scale").Chain().FetchFormat("auto")
+                DisplayName = file.FileName
             };
 
             var uploadResult = await client.UploadAsync(uploadParams);

@@ -5,7 +5,8 @@
 }
 
 
-<div class="container my-5">
+<link href="../css/froala_style.min.css" rel="stylesheet" type="text/css" />
+<div class="container my-5 fr-view">
     <div class="row justify-content-center">
         <div class="col-12 col-lg-12">
             @if (Model != null )
@@ -36,3 +37,21 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+<script>
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+        });
+    }
+</script>}

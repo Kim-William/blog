@@ -5,10 +5,24 @@
     @foreach (var blogPost in Model)
     {
         <div class="col-sm-12 col-lg-6">
-            <div class="card mb-2 border-dark ">
-                <img src="@blogPost.FeaturedImageUrl" alt="@blogPost.Heading" class="card-img-top" />
+            <div class="card mb-2 border-dark" style="height:500px;">
+                <div class="border-dark" style="width:70%;align-self: center; border: 1px solid rgba(0,0,0,.125);">
+                    <img src="@blogPost.FeaturedImageUrl" alt="@blogPost.Heading" class="card-img-top" style="width:100%; height:200px; align-self:center;" />
+                    </div>
 
-                <h2 class="card-title">@blogPost.Heading</h2>
+                @if (blogPost.Heading.Length > 30)
+                {
+                    <h3 class="card-title">@blogPost.Heading.Substring(0, 30)...</h3>
+                }
+                else if (blogPost.Heading.Length >= 24)
+                {
+                    <h3 class="card-title">@blogPost.Heading</h3>
+                }
+                else
+                {
+                    <h2 class="card-title">@blogPost.Heading</h2>
+                }
+
                 <div class="card-body">
                     <p>
                         Author: @blogPost.Author

@@ -36,21 +36,24 @@
     </style>
     <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'></script>
 </head>
-<body>
+<body style="background-color:#F7F7F8;">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow px-0">
-            <div class="container px-0">
-                <a class="navbar-brand px-0" asp-area="" asp-controller="Home" asp-action="Index">
-                    <div class="grid-container">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark box-shadow px-0 m-0" style="background-color: rgba(58, 16, 120, 0.9);">
+            <div class="container px-0 py-0">
+                <a class="navbar-brand px-0 py-0 m-0" asp-area="" asp-controller="Home" asp-action="Index">
+                    <div class="grid-item">
+                        <img src="/image/logo.png"></img>
+                    </div>
+                    @* <div class="grid-container">
                         <div class="grid-item">
-                            <h1>WoongKeol Kim</h1>
+                            <img src="/image/logo.png"></img>
                         </div>
-                        <div class="grid-item image-container">
+                        @* <div class="grid-item image-container">
                             <img src="/image/c-sharp-c.svg" alt="Image 1">
                             <img src="/image/python.svg" alt="Image 2">
                             <img src="/image/sql-database-generic.svg" alt="Image 3">
-                        </div>
-                    </div>
+                        </div> 
+                    </div> *@
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -114,6 +117,26 @@
 
                     </ul>
 
+                    <a class="me-3 text-light" role="button" asp-area="" asp-controller="Home" asp-action="Index">
+                        C#
+                    </a>
+
+                    <a class="me-3 text-light" role="button" asp-area="" asp-controller="Home" asp-action="Index">
+                        SQL
+                    </a>
+
+                    <a class="me-3 text-light" role="button" asp-area="" asp-controller="Home" asp-action="Index">
+                        Python
+                    </a>
+
+                    <a class="me-3 text-light" role="button" href="/Blogs?urlHandle=AI">
+                        AI
+                    </a>
+
+                    <a class="me-3 text-light" role="button" href="#">
+                           About
+                    </a>
+                    
                     <div class="d-flex align-items-center">
 
                         @if (signInManager.IsSignedIn(User))

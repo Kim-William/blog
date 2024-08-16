@@ -4,9 +4,13 @@
 <div class="row justify-content-center">
     @foreach (var blogPost in Model)
     {
+        @if (!blogPost.Visible)
+        {
+            continue;
+        }
         <div class="col-sm-12 col-lg-6">
-            <div class="card mb-2 border-dark" style="height:500px;">
-                <div class="border-dark" style="width:70%;align-self: center; border: 1px solid rgba(0,0,0,.125);">
+            <div class="card mb-2 border-dark px-1" style="height:450;background-color:rgba(55, 149, 189,0.1);">
+                <div class="border-dark m-1" style="width:70%;align-self: center; border: 1px solid rgba(0,0,0,.125);">
                     <img src="@blogPost.FeaturedImageUrl" alt="@blogPost.Heading" class="card-img-top" style="width:100%; height:200px; align-self:center;" />
                     </div>
 
@@ -24,18 +28,16 @@
                 }
 
                 <div class="card-body">
-                    <p>
-                        Author: @blogPost.Author
-                        <br />
+                    <div>
                         Published Date : @blogPost.PublishedDate.ToShortDateString()
-                    </p>
+                    </div>
 
-                    <p>
+                    <div>
                         @foreach (var tag in blogPost.Tags)
                         {
                             <span class="badge bg-secondary m-1">@tag.Name</span>
                         }
-                    </p>
+                    </div>
 
                     <p class="card-text">@blogPost.ShortDescription</p>
 
@@ -46,6 +48,6 @@
                        asp-route-urlHandle="@blogPost.UrlHandle">Read More</a>
                 </div>
             </div>
-        </div>
+            </div>
     }
 </div>

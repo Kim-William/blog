@@ -45,7 +45,7 @@
   --bs-light-rgb: 248, 249, 250;
   --bs-dark-rgb: 33, 37, 41;
   --bs-white-rgb: 255, 255, 255;
-  --bs-black-rgb: 0, 0, 0;
+  --bs-black-rgb: 58, 16, 120;
   --bs-body-rgb: 33, 37, 41;
   --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
@@ -4476,8 +4476,9 @@ textarea.form-control-lg {
 }
 
 .card-body {
-  flex: 1 1 auto;
-  padding: 1rem 1rem;
+    flex: 1 1 auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
 }
 
 .card-title {
@@ -7774,8 +7775,8 @@ textarea.form-control-lg {
 }
 
 .bg-dark {
-  --bs-bg-opacity: 1;
-  background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important;
+    --bs-bg-opacity: 1;
+    background-color: #3A1078;
 }
 
 .bg-black {

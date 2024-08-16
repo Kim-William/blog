@@ -1,0 +1,151 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model Wkkim.Blog.Web.Models.ViewModels.ContactInfo
+@{
+    
+}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Me</title>
+    <style>
+        body.contact {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .container-contact {
+            width: 90%;
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h2.contact {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #007bff;
+            font-size: 36px;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #666;
+        }
+
+        input[type="text"], input[type="email"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 14px;
+            color: #333;
+        }
+
+        textarea {
+            resize: vertical;
+            height: 150px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #5cb85c;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+            button:hover {
+                background-color: #4cae4c;
+            }
+
+        .contact-info {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+        }
+
+            .contact-info p {
+                margin: 5px 0;
+            }
+
+        .buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+            .buttons a {
+                display: inline-block;
+                padding: 10px 20px;
+                margin: 5px;
+                background-color: #007bff;
+                color: #fff;
+                text-decoration: none;
+                border-radius: 4px;
+                transition: background-color 0.3s ease;
+            }
+
+                .buttons a:hover {
+                    background-color: #0056b3;
+                }
+    </style>
+</head>
+
+<body class="contact">
+    <div class="container-contact">
+        <h2 class="contact">Contact Me</h2>
+        @if(ViewBag.Message != null)
+        {
+            <div class="alert alert-info">
+                @ViewBag.Message
+            </div>
+        }
+        <form method="POST">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" asp-for="Name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" asp-for="EMail" required>
+            </div>
+            <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" asp-for="Message" required></textarea>
+            </div>
+            <button type="submit">Send Message</button>
+        </form>
+
+        <div class="contact-info">
+            <p><strong>Phone[KR]:</strong>+11-11-1111-1111</p>
+            <p><strong>Phone[HU]:</strong>+11-11-111-1111</p>
+        </div>
+
+        <div class="buttons">
+            <a href="https://www.linkedin.com/in/woongkeol-kim" target="_blank">Linked In</a>
+            <a href="https://github.com/Kim-William" target="_blank">GitHub</a>
+            <a href="https://your-python-site.com" target="_blank">Blog(Python)</a>
+            <a href="https://kim-william.github.io/CV/" target="_blank">CV(HTML)</a>
+        </div>
+    </div>
+</body>

@@ -117,26 +117,18 @@
 
                     </ul>
 
-                    <a class="me-3 text-light" role="button" asp-area="" asp-controller="Home" asp-action="Index">
-                        C#
-                    </a>
+                    <a class="me-3 text-light" role="button" href="/Blogs?urlHandle=CSharp">C#</a>
 
-                    <a class="me-3 text-light" role="button" asp-area="" asp-controller="Home" asp-action="Index">
-                        SQL
-                    </a>
+                    <a class="me-3 text-light" role="button" href="/Blogs?urlHandle=SQL">SQL</a>
 
-                    <a class="me-3 text-light" role="button" asp-area="" asp-controller="Home" asp-action="Index">
-                        Python
-                    </a>
+                    <a class="me-3 text-light" role="button" href="/Blogs?urlHandle=Python">Python</a>
 
-                    <a class="me-3 text-light" role="button" href="/Blogs?urlHandle=AI">
-                        AI
-                    </a>
+                    <a class="me-3 text-light" role="button" href="/Blogs?urlHandle=AI">AI</a>
 
-                    <a class="me-3 text-light" role="button" href="#">
-                           About
-                    </a>
-                    
+                    <a class="me-3 text-light" role="button" href="/Blogs?urlHandle=AboutMe">About</a>
+
+                    <a class="me-3 text-light" role="button" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
+
                     <div class="d-flex align-items-center">
 
                         @if (signInManager.IsSignedIn(User))
